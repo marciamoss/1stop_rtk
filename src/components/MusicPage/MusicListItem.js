@@ -7,6 +7,7 @@ import {
   BsFillStopCircleFill,
 } from "react-icons/bs";
 import { GiSaxophone } from "react-icons/gi";
+import { usePreviewPlayer } from "../../hooks";
 
 function MusicListItem({
   song,
@@ -15,13 +16,20 @@ function MusicListItem({
   setPlay,
   preview,
   setPreview,
-  previewName,
   setPreviewName,
-  previewLink,
   setPreviewLink,
   timerIds,
   setTimerIds,
 }) {
+  const { playPreviewSong } = usePreviewPlayer(
+    song,
+    timerIds,
+    setTimerIds,
+    setPlay,
+    setPreview,
+    setPreviewName,
+    setPreviewLink
+  );
   const header = (
     <>
       <button className="mr-3" onClick={() => console.log("favorite clicked")}>
@@ -69,23 +77,7 @@ function MusicListItem({
                 <div className="h-5">
                   <button
                     disabled={preview && song.previewUrl !== preview}
-                    onClick={() => {
-                      setPlay(true);
-                      setPreview(song.previewUrl);
-                      setPreviewName(song.trackName);
-                      setPreviewLink(song.trackViewUrl);
-                      setTimerIds(
-                        setTimeout(() => {
-                          setPreview(null);
-                          setPreviewName(null);
-                          setPreviewLink(null);
-                          setPlay(false);
-                        }, 30500)
-                      );
-                      window.Amplitude.playNow({
-                        url: `${song.previewUrl}`,
-                      });
-                    }}
+                    onClick={() => playPreviewSong(true)}
                   >
                     <div className="flex items-center text-green-900">
                       <span className="mr-1 text-sm">30 sec preview</span>
@@ -96,16 +88,7 @@ function MusicListItem({
                 </div>
               ) : preview && song.previewUrl === preview ? (
                 <div className="h-5">
-                  <button
-                    onClick={() => {
-                      clearTimeout(timerIds);
-                      setPreview(null);
-                      setPreviewName(null);
-                      setPreviewLink(null);
-                      setPlay(false);
-                      window.Amplitude.stop();
-                    }}
-                  >
+                  <button onClick={() => playPreviewSong(false, true)}>
                     <div className="flex items-center text-pink-900">
                       <span className="mr-1 text-sm">30 sec preview</span>
                       <BsFillStopCircleFill />
