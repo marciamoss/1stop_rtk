@@ -1,0 +1,25 @@
+body {
+  background-color: rgb(253, 208, 182) ;
+}
+
+.landing-page-content {
+  font-size: 1.5rem;
+  text-align: center;
+  position: relative;
+  top: 100px !important;
+}
+
+.landing-page-items {
+  margin-top: 1% !important;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.link {
+  margin: 0 5rem 1em;
+  line-height: 1.4285em;
+  font-size: 1.5rem !important;
+  font-weight: bold;
+  font-style: italic;
+  color: #4183c4 !important;
+}

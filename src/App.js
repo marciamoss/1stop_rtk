@@ -1,25 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { useSelector } from "react-redux";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { useFetchUserQuery } from "./store";
+import { useAddUser, useInitAuth } from "./hooks";
+import Header from "./components/Header/Header";
+import LandingPage from "./components/LandingPage/LandingPage";
+import MusicPage from "./components/MusicPage/MusicPage";
 
-function App() {
+const App = () => {
+  const { authUserId, userAdded } = useSelector((state) => {
+    return {
+      authUserId: state.authData.authUserId,
+      userAdded: state.userData.userAdded,
+    };
+  });
+  useInitAuth();
+  useFetchUserQuery(authUserId);
+  useAddUser();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Header />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <LandingPage authUserId={authUserId} userAdded={userAdded} />
+          }
+        />
+        <Route path="/movies" element={<div>movies page</div>} />
+        <Route path="/music" element={<MusicPage />} />
+        <Route path="/videos" element={<div>videos page</div>} />
+        <Route path="/news" element={<div>news page</div>} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
