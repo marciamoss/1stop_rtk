@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import MusicList from "./MusicList";
 import Button from "../Button";
@@ -7,6 +8,7 @@ import { FaSearch } from "react-icons/fa";
 const MusicPage = ({ bookmarkedPage }) => {
   const [songTitle, setSongTitle] = useState("");
   const [showList, setShowList] = useState(false);
+  const { listFetching } = useSelector((state) => state.musicData);
 
   return (
     <div className="container max-[770px]:text-sm text-xl text-center mt-2 p-2">
@@ -51,6 +53,7 @@ const MusicPage = ({ bookmarkedPage }) => {
                 <div className="absolute top-2 left-1">
                   <Button
                     disabled={!songTitle}
+                    loading={listFetching}
                     onClick={() => setShowList(true)}
                     className={`h-fit w-fit border-0 ${
                       songTitle
