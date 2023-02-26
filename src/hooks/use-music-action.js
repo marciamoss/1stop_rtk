@@ -37,7 +37,7 @@ function useMusicAction(authUserId) {
       setTimeout(() => {
         setPreviouslySaved(false);
         dispatch(resetAlertPopup(id));
-      }, 0),
+      }, 1500),
     [dispatch]
   );
 
