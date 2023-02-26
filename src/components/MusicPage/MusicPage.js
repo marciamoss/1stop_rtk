@@ -43,7 +43,10 @@ const MusicPage = ({ bookmarkedPage }) => {
                   className="h-14 w-full pl-14 pr-20 rounded-lg z-0 focus:shadow focus:outline-none"
                   placeholder="Song Title (Required)"
                   value={songTitle}
-                  onChange={(event) => setSongTitle(event.target.value)}
+                  onChange={(event) => {
+                    setSongTitle(event.target.value);
+                    setShowList(false);
+                  }}
                 />
                 <div className="absolute top-2 left-1">
                   <Button
