@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import ExpandablePanel from "../ExpandablePanel";
 import {
   BsFillBookmarkHeartFill,
@@ -6,8 +7,9 @@ import {
   BsFillPlayCircleFill,
   BsFillStopCircleFill,
 } from "react-icons/bs";
+import { FaInfoCircle } from "react-icons/fa";
 import { GiSaxophone } from "react-icons/gi";
-import { usePreviewPlayer } from "../../hooks";
+import { usePreviewPlayer, useMusicAction } from "../../hooks";
 
 function MusicListItem({
   song,
@@ -21,6 +23,16 @@ function MusicListItem({
   timerIds,
   setTimerIds,
 }) {
+  const { authUserId, savedId, saveFailId } = useSelector((state) => {
+    return {
+      savedId: state.musicData.savedId,
+      saveFailId: state.musicData.saveFailId,
+      authUserId: state.authData.authUserId,
+    };
+  });
+
+  const { saveSong, previouslySaved } = useMusicAction(authUserId);
+
   const { playPreviewSong } = usePreviewPlayer(
     song,
     timerIds,
@@ -32,7 +44,7 @@ function MusicListItem({
   );
   const header = (
     <>
-      <button className="mr-3" onClick={() => console.log("favorite clicked")}>
+      <button className="mr-3" onClick={() => saveSong(song)}>
         {!bookmarked ? <BsFillBookmarkHeartFill /> : <BsFillBookmarkDashFill />}
       </button>
       {song.trackName}
@@ -41,6 +53,28 @@ function MusicListItem({
 
   return (
     <>
+      {savedId === song.trackId ||
+      previouslySaved ||
+      saveFailId === song.trackId ? (
+        <div
+          className={`flex items-center ${
+            saveFailId ? "bg-red-500" : "bg-green-500"
+          } text-white text-lg font-bold px-4 py-3" role="alert"`}
+        >
+          <FaInfoCircle />
+          {saveFailId ? (
+            <p className="ml-1">Save Action Failed At This Time!</p>
+          ) : (
+            <p className="ml-1">
+              {previouslySaved
+                ? ` Previously Bookmarked: "${song.trackName}"`
+                : `Bookmarked "${song.trackName}"`}
+            </p>
+          )}
+        </div>
+      ) : (
+        ""
+      )}
       <ExpandablePanel header={header}>
         <div className="text-xl max-[770px]:text-sm">
           <div key={song.trackId} className="content flex py-2">

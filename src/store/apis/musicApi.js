@@ -20,9 +20,59 @@ const musicApi = createApi({
           };
         },
       }),
+      saveUserSong: builder.mutation({
+        invalidatesTags: (result, error, song) => {
+          return [{ type: "UsersSongs", id: song.userId }];
+        },
+        query: (song) => {
+          return {
+            url: "/api/music/save",
+            method: "POST",
+            body: {
+              song,
+            },
+          };
+        },
+      }),
+      fetchUserSongs: builder.query({
+        providesTags: (result, error, user) => {
+          let tags;
+          if (result) {
+            tags = result?.map((song) => {
+              return { type: "Song", id: song.trackId };
+            });
+            tags.push({ type: "UsersSongs", id: user });
+          } else {
+            tags = [];
+          }
+          return tags;
+        },
+        query: (user) => {
+          return {
+            url: `/api/music/${user}`,
+            method: "GET",
+          };
+        },
+      }),
+      deleteUserSong: builder.mutation({
+        invalidatesTags: (result, error, song) => {
+          return [{ type: "UsersSongs", id: song.userId }];
+        },
+        query: (song) => {
+          return {
+            url: `/api/music/${song._id}`,
+            method: "DELETE",
+          };
+        },
+      }),
     };
   },
 });
 
-export const { useSearchMusicQuery } = musicApi;
+export const {
+  useSearchMusicQuery,
+  useSaveUserSongMutation,
+  useFetchUserSongsQuery,
+  useDeleteUserSongMutation,
+} = musicApi;
 export { musicApi };

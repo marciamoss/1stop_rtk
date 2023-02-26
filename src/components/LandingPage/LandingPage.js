@@ -4,7 +4,6 @@ import { Link, useLocation } from "react-router-dom";
 import MovingComponent from "react-moving-text";
 import "./LandingPage.css";
 import { LANDING_LINKS } from "../../constants/types";
-
 const LandingPage = () => {
   const { signedIn, errorMessage } = useSelector((state) => {
     return {

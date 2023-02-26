@@ -4,11 +4,17 @@ import { Link } from "react-router-dom";
 import MusicList from "./MusicList";
 import Button from "../Button";
 import { FaSearch } from "react-icons/fa";
+import { useSearchMusicQuery, useFetchUserSongsQuery } from "../../store";
 
 const MusicPage = ({ bookmarkedPage }) => {
   const [songTitle, setSongTitle] = useState("");
   const [showList, setShowList] = useState(false);
-  const { listFetching } = useSelector((state) => state.musicData);
+  const { authUserId, listFetching } = useSelector((state) => {
+    return {
+      authUserId: state.authData.authUserId,
+      listFetching: state.musicData.listFetching,
+    };
+  });
 
   return (
     <div className="container max-[770px]:text-sm text-xl text-center mt-2 p-2">
@@ -30,7 +36,11 @@ const MusicPage = ({ bookmarkedPage }) => {
         )}
       </h5>
       {bookmarkedPage ? (
-        <MusicList bookmarked={bookmarkedPage} />
+        <MusicList
+          queryParameter={authUserId}
+          bookmarked={true}
+          queryFn={useFetchUserSongsQuery}
+        />
       ) : (
         <>
           <div>
@@ -68,7 +78,11 @@ const MusicPage = ({ bookmarkedPage }) => {
             </div>
           </div>
           {showList ? (
-            <MusicList songTitle={songTitle} bookmarked={false} />
+            <MusicList
+              queryParameter={songTitle}
+              bookmarked={false}
+              queryFn={useSearchMusicQuery}
+            />
           ) : (
             ""
           )}

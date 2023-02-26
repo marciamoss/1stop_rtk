@@ -1,22 +1,43 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import Skeleton from "../Skeleton";
-import { useSearchMusicQuery } from "../../store";
 import MusicListItem from "./MusicListItem";
 import { BsFillStopCircleFill } from "react-icons/bs";
+import { useSetSearchResults } from "../../hooks";
 
-function MusicList({ songTitle, bookmarked }) {
-  const { data, error, isFetching } = useSearchMusicQuery({ songTitle });
+function MusicList({ queryParameter, bookmarked, queryFn }) {
+  let queryObject = !bookmarked
+    ? { songTitle: queryParameter }
+    : queryParameter;
+
+  const { data, error, isFetching } = queryFn(queryObject);
+  useSetSearchResults(data);
+
   const location = useLocation();
   const [play, setPlay] = useState(false);
   const [preview, setPreview] = useState(null);
   const [previewName, setPreviewName] = useState(null);
   const [previewLink, setPreviewLink] = useState(null);
   const [timerIds, setTimerIds] = useState([]);
+  const { searchResults } = useSelector((state) => {
+    return {
+      searchResults: state.musicData.searchResults,
+    };
+  });
 
   let content;
   if (isFetching) {
     content = <Skeleton times={6} className="h-10 w-full" />;
+  } else if (
+    searchResults.length === 0 &&
+    data?.results?.filter((s) => s.kind === "song").length > 0
+  ) {
+    content = (
+      <div className="text-center mt-28 text-green-800 font-extrabold text-2xl">
+        All the songs for this title have been saved, Search for a new song
+      </div>
+    );
   } else if (error && location.pathname === "/music") {
     content = (
       <div className="m-2 container text-red-600 font-extrabold text-xl">
@@ -24,9 +45,7 @@ function MusicList({ songTitle, bookmarked }) {
       </div>
     );
   } else {
-    const contentData = !bookmarked
-      ? data?.results?.filter((s) => s.kind === "song")
-      : [];
+    const contentData = !bookmarked ? searchResults : data;
 
     content = contentData.map((song) => {
       return (
@@ -84,11 +103,14 @@ function MusicList({ songTitle, bookmarked }) {
       )}
       <div className="flex flex-row justify-between items-center m-3">
         <h1 className="m-2 container font-extrabold text-xl">
-          {!bookmarked && data?.results?.length > 0 ? "List of Songs" : ""}
+          {!bookmarked && searchResults.length > 0 ? "List of Songs" : ""}
+          {bookmarked && data?.length > 0 ? "Your Songs" : ""}
         </h1>
       </div>
       <h1 className="m-2 container font-extrabold text-xl">
-        {data?.results?.length === 0 ? "No Songs Found" : ""}
+        {!error && data?.results?.filter((s) => s.kind === "song").length === 0
+          ? "No Songs Found"
+          : ""}
       </h1>
       {content}
     </div>

@@ -6,7 +6,11 @@ import {
   validRoute,
 } from "./slices/authDataSlice";
 import { userDataReducer } from "./slices/userDataSlice";
-import { songReducer, setSongSliceData } from "./slices/musicDataSlice";
+import {
+  songReducer,
+  setSongSliceData,
+  resetAlertPopup,
+} from "./slices/musicDataSlice";
 
 import { authApi } from "./apis/authApi";
 import { userApi } from "./apis/userApi";
@@ -30,8 +34,13 @@ export const store = configureStore({
 });
 setupListeners(store.dispatch);
 
-export { authDataInfo, validRoute, setSongSliceData };
+export { authDataInfo, validRoute, setSongSliceData, resetAlertPopup };
 
 export { useLogInMutation, useLogOutMutation } from "./apis/authApi";
 export { useFetchUserQuery, useAddUserMutation } from "./apis/userApi";
-export { useSearchMusicQuery } from "./apis/musicApi";
+export {
+  useSearchMusicQuery,
+  useSaveUserSongMutation,
+  useFetchUserSongsQuery,
+  useDeleteUserSongMutation,
+} from "./apis/musicApi";

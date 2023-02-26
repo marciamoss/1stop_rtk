@@ -1,16 +1,16 @@
 import LandingPage from "../components/LandingPage/LandingPage";
-// import MusicPage from "../components/MusicPage/MusicPage";
+import MusicPage from "../components/MusicPage/MusicPage";
 // import NewsPage from "../components/NewsPage/NewsPage";
 // import MoviesPage from "../components/MoviesPage/MoviesPage";
 // import VideosPage from "../components/VideosPage/VideosPage";
 
 const APPROUTESCOMPONENTS = [
   { r: "/", p: <LandingPage /> },
-  // { r: "/music", p: <MusicPage /> },
-  // {
-  //   r: "/music/bookmarked",
-  //   p: <MusicPage bookmarkedPage={true} />,
-  // },
+  { r: "/music", p: <MusicPage /> },
+  {
+    r: "/music/bookmarked",
+    p: <MusicPage bookmarkedPage={true} />,
+  },
   // { r: "/news", p: <NewsPage /> },
   // {
   //   r: "/news/bookmarked",

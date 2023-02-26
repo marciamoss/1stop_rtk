@@ -2,22 +2,34 @@ import { createSlice } from "@reduxjs/toolkit";
 import { musicApi } from "../apis/musicApi";
 
 const initialState = {
-  isLoading: false,
-  loadingError: false,
-  loadingSavedSongsError: false,
   songTitle: "",
-  songsList: [],
-  noSongsFound: false,
+  showList: false,
+  listFetching: false,
+  searchResults: [],
   savedSongs: [],
   savedId: "",
-  actionFailedId: "",
+  saveFailId: "",
+  deleteFailId: "",
 };
+
 const musicDataSlice = createSlice({
   name: "song",
   initialState,
   reducers: {
     setSongSliceData(state, action) {
       return { ...state, ...action.payload };
+    },
+    resetAlertPopup(state, action) {
+      if (action.payload.saveFailId) {
+        state.saveFailId = "";
+      } else if (action.payload.deleteFailId) {
+        state.deleteFailId = "";
+      } else if (action.payload.savedId) {
+        state.savedId = "";
+        state.searchResults = state.searchResults.filter(
+          (song) => song.trackId !== action.payload.savedId
+        );
+      }
     },
   },
   extraReducers(builder) {
@@ -39,8 +51,53 @@ const musicDataSlice = createSlice({
         state.listFetching = false;
       }
     );
+    builder.addMatcher(
+      musicApi.endpoints.saveUserSong.matchPending,
+      (state, { payload }) => {
+        state.savedId = "";
+        state.saveFailId = "";
+      }
+    );
+    builder.addMatcher(
+      musicApi.endpoints.saveUserSong.matchFulfilled,
+      (state, { payload }) => {
+        state.savedId = payload.trackId;
+        state.saveFailId = "";
+      }
+    );
+    builder.addMatcher(
+      musicApi.endpoints.saveUserSong.matchRejected,
+      (state, { payload, meta, error }) => {
+        state.saveFailId = meta.arg.originalArgs.trackId;
+        state.savedId = "";
+      }
+    );
+    builder.addMatcher(
+      musicApi.endpoints.fetchUserSongs.matchFulfilled,
+      (state, { payload }) => {
+        state.savedSongs = payload;
+      }
+    );
+    builder.addMatcher(
+      musicApi.endpoints.deleteUserSong.matchPending,
+      (state, { payload }) => {
+        state.deleteFailId = "";
+      }
+    );
+    builder.addMatcher(
+      musicApi.endpoints.deleteUserSong.matchFulfilled,
+      (state, { payload }) => {
+        state.deleteFailId = "";
+      }
+    );
+    builder.addMatcher(
+      musicApi.endpoints.deleteUserSong.matchRejected,
+      (state, { payload, meta, error }) => {
+        state.deleteFailId = meta.arg.originalArgs.trackId;
+      }
+    );
   },
 });
 
-export const { setSongSliceData } = musicDataSlice.actions;
+export const { setSongSliceData, resetAlertPopup } = musicDataSlice.actions;
 export const songReducer = musicDataSlice.reducer;

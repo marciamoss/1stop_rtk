@@ -6,10 +6,12 @@ import { useAddUser, useInitAuth } from "./hooks";
 import Header from "./components/Header/Header";
 import LandingPage from "./components/LandingPage/LandingPage";
 import MusicPage from "./components/MusicPage/MusicPage";
+import { APPROUTES, APPROUTESCOMPONENTS } from "./constants/types";
 
 const App = () => {
-  const { authUserId, userAdded } = useSelector((state) => {
+  const { authUserId, userAdded, signedIn } = useSelector((state) => {
     return {
+      signedIn: state.authData.signedIn,
       authUserId: state.authData.authUserId,
       userAdded: state.userData.userAdded,
     };
@@ -22,16 +24,19 @@ const App = () => {
     <Router>
       <Header />
       <Routes>
-        <Route
-          path="/"
-          element={
-            <LandingPage authUserId={authUserId} userAdded={userAdded} />
-          }
-        />
-        <Route path="/movies" element={<div>movies page</div>} />
-        <Route path="/music" element={<MusicPage />} />
-        <Route path="/videos" element={<div>videos page</div>} />
-        <Route path="/news" element={<div>news page</div>} />
+        {signedIn ? (
+          <>
+            {APPROUTESCOMPONENTS.map((rt) => (
+              <Route key={rt.r} path={rt.r} element={rt.p} />
+            ))}
+          </>
+        ) : (
+          <>
+            {APPROUTES.map((r) => (
+              <Route key={r} path={r} element={<LandingPage />} />
+            ))}
+          </>
+        )}
       </Routes>
     </Router>
   );
