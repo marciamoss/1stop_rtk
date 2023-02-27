@@ -17,18 +17,18 @@ const MusicPage = ({ bookmarkedPage }) => {
   });
 
   return (
-    <div className="container max-[770px]:text-sm text-xl text-center mt-2 p-2">
+    <div className="container max-[770px]:text-sm text-center mt-2 p-2">
       <h5 className="text-right">
         {!bookmarkedPage ? (
           <Link
-            className="text-blue-900 italic font-bold max-[770px]:text-lg text-2xl"
+            className="text-blue-900 italic font-bold max-[770px]:text-base text-lg"
             to="/music/bookmarked"
           >
             Bookmarked
           </Link>
         ) : (
           <Link
-            className="text-blue-900 italic font-bold max-[770px]:text-lg text-2xl"
+            className="text-blue-900 italic font-bold max-[770px]:text-base text-lg"
             to="/music"
           >
             Back to Search
@@ -44,7 +44,9 @@ const MusicPage = ({ bookmarkedPage }) => {
       ) : (
         <>
           <div>
-            <h2 className="text-2xl font-bold mb-1">Find a song</h2>
+            <h2 className="max-[770px]:text-base text-lg font-bold mb-1">
+              Find a song
+            </h2>
             <div className="flex justify-center">
               <form
                 onSubmit={(event) => event.preventDefault()}

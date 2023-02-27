@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import ExpandablePanel from "../ExpandablePanel";
+import ConfirmModal from "../ConfirmModal";
 import {
   BsFillBookmarkHeartFill,
   BsFillBookmarkDashFill,
@@ -9,6 +10,7 @@ import {
 } from "react-icons/bs";
 import { FaInfoCircle } from "react-icons/fa";
 import { GiSaxophone } from "react-icons/gi";
+import { useDeleteUserSongMutation } from "../../store";
 import { usePreviewPlayer, useMusicAction } from "../../hooks";
 
 function MusicListItem({
@@ -23,13 +25,18 @@ function MusicListItem({
   timerIds,
   setTimerIds,
 }) {
-  const { authUserId, savedId, saveFailId } = useSelector((state) => {
-    return {
-      savedId: state.musicData.savedId,
-      saveFailId: state.musicData.saveFailId,
-      authUserId: state.authData.authUserId,
-    };
-  });
+  const { authUserId, savedId, saveFailId, deleteFailId } = useSelector(
+    (state) => {
+      return {
+        savedId: state.musicData.savedId,
+        saveFailId: state.musicData.saveFailId,
+        deleteFailId: state.musicData.deleteFailId,
+        authUserId: state.authData.authUserId,
+      };
+    }
+  );
+  const [deleteConfirm, setDeleteConfirm] = useState(false);
+  const [deleteUserSong] = useDeleteUserSongMutation();
 
   const { saveSong, previouslySaved } = useMusicAction(authUserId);
 
@@ -42,9 +49,17 @@ function MusicListItem({
     setPreviewName,
     setPreviewLink
   );
+
+  const handleAddRemove = () => {
+    if (!bookmarked) {
+      saveSong(song);
+    } else {
+      setDeleteConfirm(true);
+    }
+  };
   const header = (
     <>
-      <button className="mr-3" onClick={() => saveSong(song)}>
+      <button className="mr-3" onClick={handleAddRemove}>
         {!bookmarked ? <BsFillBookmarkHeartFill /> : <BsFillBookmarkDashFill />}
       </button>
       {song.trackName}
@@ -52,18 +67,29 @@ function MusicListItem({
   );
 
   return (
-    <>
+    <div className="text-base">
+      {deleteConfirm ? (
+        <ConfirmModal
+          setDeleteConfirm={setDeleteConfirm}
+          deleteFn={deleteUserSong}
+          current={song}
+          confirmMessage={`Delete Confirmation on "${song.trackName}"?`}
+        />
+      ) : (
+        ""
+      )}
       {savedId === song.trackId ||
       previouslySaved ||
-      saveFailId === song.trackId ? (
+      saveFailId === song.trackId ||
+      deleteFailId === song.trackId ? (
         <div
           className={`flex items-center ${
-            saveFailId ? "bg-red-500" : "bg-green-500"
+            saveFailId || deleteFailId ? "bg-red-500" : "bg-green-500"
           } text-white text-lg font-bold px-4 py-3" role="alert"`}
         >
           <FaInfoCircle />
-          {saveFailId ? (
-            <p className="ml-1">Save Action Failed At This Time!</p>
+          {saveFailId || deleteFailId ? (
+            <p className="ml-1">Action Failed At This Time!</p>
           ) : (
             <p className="ml-1">
               {previouslySaved
@@ -76,7 +102,7 @@ function MusicListItem({
         ""
       )}
       <ExpandablePanel header={header}>
-        <div className="text-xl max-[770px]:text-sm">
+        <div className="text-base max-[770px]:text-sm">
           <div key={song.trackId} className="content flex py-2">
             {song.artworkUrl100 ? (
               <img
@@ -143,7 +169,7 @@ function MusicListItem({
           </div>
         </div>
       </ExpandablePanel>
-    </>
+    </div>
   );
 }
 export default MusicListItem;

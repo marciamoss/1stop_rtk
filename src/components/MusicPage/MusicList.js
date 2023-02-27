@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
 import Skeleton from "../Skeleton";
 import MusicListItem from "./MusicListItem";
 import { BsFillStopCircleFill } from "react-icons/bs";
@@ -10,11 +9,9 @@ function MusicList({ queryParameter, bookmarked, queryFn }) {
   let queryObject = !bookmarked
     ? { songTitle: queryParameter }
     : queryParameter;
-
   const { data, error, isFetching } = queryFn(queryObject);
   useSetSearchResults(data);
 
-  const location = useLocation();
   const [play, setPlay] = useState(false);
   const [preview, setPreview] = useState(null);
   const [previewName, setPreviewName] = useState(null);
@@ -38,7 +35,7 @@ function MusicList({ queryParameter, bookmarked, queryFn }) {
         All the songs for this title have been saved, Search for a new song
       </div>
     );
-  } else if (error && location.pathname === "/music") {
+  } else if (error) {
     content = (
       <div className="m-2 container text-red-600 font-extrabold text-xl">
         Error fetching data...
@@ -46,7 +43,6 @@ function MusicList({ queryParameter, bookmarked, queryFn }) {
     );
   } else {
     const contentData = !bookmarked ? searchResults : data;
-
     content = contentData.map((song) => {
       return (
         <MusicListItem
@@ -102,7 +98,7 @@ function MusicList({ queryParameter, bookmarked, queryFn }) {
         ""
       )}
       <div className="flex flex-row justify-between items-center m-3">
-        <h1 className="m-2 container font-extrabold text-xl">
+        <h1 className="m-2 container font-extrabold max-[770px]:text-sm text-base">
           {!bookmarked && searchResults.length > 0 ? "List of Songs" : ""}
           {bookmarked && data?.length > 0 ? "Your Songs" : ""}
         </h1>
@@ -110,6 +106,9 @@ function MusicList({ queryParameter, bookmarked, queryFn }) {
       <h1 className="m-2 container font-extrabold text-xl">
         {!error && data?.results?.filter((s) => s.kind === "song").length === 0
           ? "No Songs Found"
+          : ""}
+        {!error && bookmarked && !data?.length
+          ? "You have not saved any songs yet."
           : ""}
       </h1>
       {content}

@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import MovingComponent from "react-moving-text";
 import "./LandingPage.css";
 import { LANDING_LINKS } from "../../constants/types";
