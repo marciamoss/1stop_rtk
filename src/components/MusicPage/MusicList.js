@@ -67,7 +67,7 @@ function MusicList({ queryParameter, bookmarked, queryFn }) {
   return (
     <div className="mt-1 mb-5">
       {preview ? (
-        <div className="sticky top-0 bg-black text-center text-white">
+        <div className="sticky top-0 bg-slate-300 text-pink-900 border-8 border-slate-600">
           <div className="h-fit mb-2">
             <button
               onClick={() => {

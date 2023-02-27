@@ -15,7 +15,7 @@ const musicApi = createApi({
         query: ({ songTitle }) => {
           const songName = songTitle.split(" ").join("+");
           return {
-            url: `https://itunes.apple.com/search?term=${songName}`,
+            url: `${keys.music.url}/search?term=${songName}`,
             method: "GET",
           };
         },

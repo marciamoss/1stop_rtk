@@ -5,15 +5,13 @@ import { useFetchUserQuery } from "./store";
 import { useAddUser, useInitAuth } from "./hooks";
 import Header from "./components/Header/Header";
 import LandingPage from "./components/LandingPage/LandingPage";
-import MusicPage from "./components/MusicPage/MusicPage";
 import { APPROUTES, APPROUTESCOMPONENTS } from "./constants/types";
 
 const App = () => {
-  const { authUserId, userAdded, signedIn } = useSelector((state) => {
+  const { authUserId, signedIn } = useSelector((state) => {
     return {
       signedIn: state.authData.signedIn,
       authUserId: state.authData.authUserId,
-      userAdded: state.userData.userAdded,
     };
   });
   useInitAuth();
