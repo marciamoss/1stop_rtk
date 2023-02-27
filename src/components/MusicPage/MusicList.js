@@ -3,14 +3,14 @@ import { useSelector } from "react-redux";
 import Skeleton from "../Skeleton";
 import MusicListItem from "./MusicListItem";
 import { BsFillStopCircleFill } from "react-icons/bs";
-import { useSetSearchResults } from "../../hooks";
+import { useSetMusicSearchResults } from "../../hooks";
 
 function MusicList({ queryParameter, bookmarked, queryFn }) {
   let queryObject = !bookmarked
     ? { songTitle: queryParameter }
     : queryParameter;
   const { data, error, isFetching } = queryFn(queryObject);
-  useSetSearchResults(data);
+  useSetMusicSearchResults(data);
 
   const [play, setPlay] = useState(false);
   const [preview, setPreview] = useState(null);
@@ -103,7 +103,7 @@ function MusicList({ queryParameter, bookmarked, queryFn }) {
           {bookmarked && data?.length > 0 ? "Your Songs" : ""}
         </h1>
       </div>
-      <h1 className="m-2 container font-extrabold text-xl">
+      <h1 className="m-2 container font-extrabold text-xl text-red-900">
         {!error && data?.results?.filter((s) => s.kind === "song").length === 0
           ? "No Songs Found"
           : ""}

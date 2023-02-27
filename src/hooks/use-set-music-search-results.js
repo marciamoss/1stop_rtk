@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setSongSliceData } from "../store";
 import uniqby from "lodash.uniqby";
 
-function useSetSearchResults(data) {
+function useSetMusicSearchResults(data) {
   const dispatch = useDispatch();
   const { savedSongs } = useSelector((state) => {
     return {
@@ -30,4 +30,4 @@ function useSetSearchResults(data) {
     }
   }, [data?.results, savedSongs, dispatch]);
 }
-export default useSetSearchResults;
+export default useSetMusicSearchResults;

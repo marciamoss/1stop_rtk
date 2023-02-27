@@ -4,7 +4,7 @@ import useCheckUser from "./use-check-user";
 import useCheckRoute from "./use-check-route";
 import usePreviewPlayer from "./use-preview-player";
 import useMusicAction from "./use-music-action";
-import useSetSearchResults from "./use-set-search-results";
+import useSetMusicSearchResults from "./use-set-music-search-results";
 export {
   useInitAuth,
   useAddUser,
@@ -12,5 +12,5 @@ export {
   useCheckRoute,
   usePreviewPlayer,
   useMusicAction,
-  useSetSearchResults,
+  useSetMusicSearchResults,
 };
