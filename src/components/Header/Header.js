@@ -4,7 +4,8 @@ import { useLocation, Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { useSelector } from "react-redux";
 import { useCheckRoute } from "../../hooks";
-// import PageNotFound from "../PageNotFound";
+import PageNotFound from "../PageNotFound";
+import { APPROUTES } from "../../constants/types";
 
 const Header = () => {
   useCheckRoute();
@@ -23,9 +24,11 @@ const Header = () => {
     }
   );
 
-  // if (location.pathname !== "/") {
-  //   return <PageNotFound />;
-  // }
+  const showHeader =
+    APPROUTES.filter((r) => r === location.pathname).length > 0;
+  if (!showHeader) {
+    return <PageNotFound />;
+  }
 
   return (
     <nav className="py-6 px-10 w-full bg-black">
