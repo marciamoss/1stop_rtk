@@ -5,6 +5,9 @@ import useCheckRoute from "./use-check-route";
 import usePreviewPlayer from "./use-preview-player";
 import useMusicAction from "./use-music-action";
 import useSetMusicSearchResults from "./use-set-music-search-results";
+import useNewsAction from "./use-news-action";
+import useSetNewsSearchResults from "./use-set-news-search-results";
+import useFormatDate from "./use-format-date";
 export {
   useInitAuth,
   useAddUser,
@@ -13,4 +16,7 @@ export {
   usePreviewPlayer,
   useMusicAction,
   useSetMusicSearchResults,
+  useNewsAction,
+  useSetNewsSearchResults,
+  useFormatDate,
 };

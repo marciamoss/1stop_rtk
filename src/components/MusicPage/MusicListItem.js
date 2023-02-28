@@ -105,13 +105,25 @@ function MusicListItem({
         <div className="text-base max-[770px]:text-sm">
           <div key={song.trackId} className="content flex py-2">
             {song.artworkUrl100 ? (
-              <img
-                className="inline h-20 w-20"
-                src={song.artworkUrl100}
-                alt="N/A"
-              />
+              <a
+                href={song.trackViewUrl}
+                target="blank"
+                className="italic text-blue-600"
+              >
+                <img
+                  className="inline h-20 w-20"
+                  src={song.artworkUrl100}
+                  alt="N/A"
+                />
+              </a>
             ) : (
-              <GiSaxophone className="inline h-20 w-20" />
+              <a
+                href={song.trackViewUrl}
+                target="blank"
+                className="italic text-blue-600"
+              >
+                <GiSaxophone className="inline h-20 w-20" />
+              </a>
             )}
 
             <div className="item-body px-2 ">

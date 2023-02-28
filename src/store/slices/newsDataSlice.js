@@ -1,23 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { musicApi } from "../apis/musicApi";
+import { newsApi } from "../apis/newsApi";
 
 const initialState = {
   listFetching: false,
   searchResults: [],
-  savedSongs: [],
+  savedNews: [],
   savedId: "",
   saveFailId: "",
   deleteFailId: "",
 };
 
-const musicDataSlice = createSlice({
-  name: "song",
+const newsDataSlice = createSlice({
+  name: "news",
   initialState,
   reducers: {
-    setSongSliceData(state, action) {
+    setNewsSliceData(state, action) {
       return { ...state, ...action.payload };
     },
-    resetMusicAlertPopup(state, action) {
+    resetNewsAlertPopup(state, action) {
       if (action.payload.saveFailId) {
         state.saveFailId = "";
       } else if (action.payload.deleteFailId) {
@@ -25,78 +25,77 @@ const musicDataSlice = createSlice({
       } else if (action.payload.savedId) {
         state.savedId = "";
         state.searchResults = state.searchResults.filter(
-          (song) => song.trackId !== action.payload.savedId
+          (news) => news.uri !== action.payload.savedId
         );
       }
     },
   },
   extraReducers(builder) {
     builder.addMatcher(
-      musicApi.endpoints.searchMusic.matchPending,
+      newsApi.endpoints.searchNews.matchPending,
       (state, { payload }) => {
         state.listFetching = true;
       }
     );
     builder.addMatcher(
-      musicApi.endpoints.searchMusic.matchFulfilled,
+      newsApi.endpoints.searchNews.matchFulfilled,
       (state, { payload }) => {
         state.listFetching = false;
       }
     );
     builder.addMatcher(
-      musicApi.endpoints.searchMusic.matchRejected,
+      newsApi.endpoints.searchNews.matchRejected,
       (state, { payload }) => {
         state.listFetching = false;
       }
     );
     builder.addMatcher(
-      musicApi.endpoints.saveUserSong.matchPending,
+      newsApi.endpoints.saveUserArticle.matchPending,
       (state, { payload }) => {
         state.savedId = "";
         state.saveFailId = "";
       }
     );
     builder.addMatcher(
-      musicApi.endpoints.saveUserSong.matchFulfilled,
+      newsApi.endpoints.saveUserArticle.matchFulfilled,
       (state, { payload }) => {
-        state.savedId = payload.trackId;
+        state.savedId = payload.uri;
         state.saveFailId = "";
       }
     );
     builder.addMatcher(
-      musicApi.endpoints.saveUserSong.matchRejected,
+      newsApi.endpoints.saveUserArticle.matchRejected,
       (state, { payload, meta, error }) => {
-        state.saveFailId = meta.arg.originalArgs.trackId;
+        state.saveFailId = meta.arg.originalArgs.uri;
         state.savedId = "";
       }
     );
     builder.addMatcher(
-      musicApi.endpoints.fetchUserSongs.matchFulfilled,
+      newsApi.endpoints.fetchUserArticles.matchFulfilled,
       (state, { payload }) => {
-        state.savedSongs = payload;
+        state.savedNews = payload;
       }
     );
     builder.addMatcher(
-      musicApi.endpoints.deleteUserSong.matchPending,
-      (state, { payload }) => {
-        state.deleteFailId = "";
-      }
-    );
-    builder.addMatcher(
-      musicApi.endpoints.deleteUserSong.matchFulfilled,
+      newsApi.endpoints.deleteUserArticle.matchPending,
       (state, { payload }) => {
         state.deleteFailId = "";
       }
     );
     builder.addMatcher(
-      musicApi.endpoints.deleteUserSong.matchRejected,
+      newsApi.endpoints.deleteUserArticle.matchFulfilled,
+      (state, { payload }) => {
+        state.deleteFailId = "";
+      }
+    );
+    builder.addMatcher(
+      newsApi.endpoints.deleteUserArticle.matchRejected,
       (state, { payload, meta, error }) => {
-        state.deleteFailId = meta.arg.originalArgs.trackId;
+        state.deleteFailId = meta.arg.originalArgs.uri;
       }
     );
   },
 });
 
-export const { setSongSliceData, resetMusicAlertPopup } =
-  musicDataSlice.actions;
-export const songReducer = musicDataSlice.reducer;
+export const { setNewsSliceData, resetNewsAlertPopup } = newsDataSlice.actions;
+export const newsReducer = newsDataSlice.reducer;

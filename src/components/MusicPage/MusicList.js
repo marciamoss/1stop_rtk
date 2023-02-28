@@ -99,7 +99,9 @@ function MusicList({ queryParameter, bookmarked, queryFn }) {
       )}
       <div className="flex flex-row justify-between items-center m-3">
         <h1 className="m-2 container font-extrabold max-[770px]:text-sm text-base">
-          {!bookmarked && searchResults.length > 0 ? "List of Songs" : ""}
+          {!bookmarked && searchResults.length > 0
+            ? `List of Songs for "${queryParameter.toUpperCase()}"`
+            : ""}
           {bookmarked && data?.length > 0 ? "Your Songs" : ""}
         </h1>
       </div>

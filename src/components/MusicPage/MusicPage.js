@@ -71,7 +71,7 @@ const MusicPage = ({ bookmarkedPage }) => {
                       songTitle
                         ? "text-blue-900 hover:text-green-900"
                         : "text-slate-300"
-                    }`}
+                    } ${listFetching ? "text-green-900 text-2xl" : ""}`}
                   >
                     <FaSearch size={30} />
                   </Button>

@@ -1,34 +1,34 @@
 import { useEffect, useCallback, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  setSongSliceData,
-  resetMusicAlertPopup,
-  useSaveUserSongMutation,
-  useFetchUserSongsQuery,
+  setNewsSliceData,
+  resetNewsAlertPopup,
+  useSaveUserArticleMutation,
+  useFetchUserArticlesQuery,
 } from "../store";
 
-function useMusicAction(authUserId) {
+function useNewsAction(authUserId) {
   const dispatch = useDispatch();
-  const [saveUserSong] = useSaveUserSongMutation();
+  const [saveUserArticle] = useSaveUserArticleMutation();
   const [previouslySaved, setPreviouslySaved] = useState(false);
-  useFetchUserSongsQuery(authUserId);
+  useFetchUserArticlesQuery(authUserId);
 
-  const { savedSongs, savedId, saveFailId, deleteFailId } = useSelector(
+  const { savedNews, savedId, saveFailId, deleteFailId } = useSelector(
     (state) => {
       return {
-        savedSongs: state.musicData.savedSongs,
-        savedId: state.musicData.savedId,
-        saveFailId: state.musicData.saveFailId,
-        deleteFailId: state.musicData.deleteFailId,
+        savedNews: state.newsData.savedNews,
+        savedId: state.newsData.savedId,
+        saveFailId: state.newsData.saveFailId,
+        deleteFailId: state.newsData.deleteFailId,
       };
     }
   );
-  const saveSong = (song) => {
-    if (savedSongs.filter((s) => s.trackId === song.trackId).length > 0) {
+  const saveNews = (news) => {
+    if (savedNews.filter((s) => s.uri === news.uri).length > 0) {
       setPreviouslySaved(true);
-      dispatch(setSongSliceData({ savedId: song.trackId }));
+      dispatch(setNewsSliceData({ savedId: news.uri }));
     } else {
-      saveUserSong({ ...song, ...{ userId: authUserId } });
+      saveUserArticle({ ...news, ...{ userId: authUserId } });
     }
   };
 
@@ -36,7 +36,7 @@ function useMusicAction(authUserId) {
     (id) =>
       setTimeout(() => {
         setPreviouslySaved(false);
-        dispatch(resetMusicAlertPopup(id));
+        dispatch(resetNewsAlertPopup(id));
       }, 1500),
     [dispatch]
   );
@@ -54,9 +54,9 @@ function useMusicAction(authUserId) {
   }, [savedId, saveFailId, deleteFailId, dispatch, resetAlert]);
 
   return {
-    saveSong,
+    saveNews,
     previouslySaved,
   };
 }
 
-export default useMusicAction;
+export default useNewsAction;
