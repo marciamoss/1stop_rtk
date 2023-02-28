@@ -53,10 +53,6 @@ const NewsPage = ({ bookmarkedPage }) => {
                 onChange={(option) => setSection(option)}
                 category={"Pick a news category"}
               />
-              <p className="text-sm text-green-900 font-bold">
-                {" "}
-                *click the search icon to the left to fetch news
-              </p>
               <div className="absolute top-10 left-1 max-[770px]:top-8">
                 <Button
                   disabled={!section}

@@ -4,8 +4,10 @@ import { Link, useLocation } from "react-router-dom";
 import MovingComponent from "react-moving-text";
 import "./LandingPage.css";
 import { APPROUTES, LANDING_LINKS } from "../../constants/types";
+import { usePreviewPlayerReset } from "../../hooks";
 
 const LandingPage = () => {
+  usePreviewPlayerReset();
   const location = useLocation();
   const showLanding =
     APPROUTES.filter((r) => r === location.pathname).length > 0;

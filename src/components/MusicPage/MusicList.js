@@ -1,28 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import Skeleton from "../Skeleton";
 import MusicListItem from "./MusicListItem";
 import { BsFillStopCircleFill } from "react-icons/bs";
+import { setPreviewPlayerSliceData, useStopPlayerMutation } from "../../store";
 import { useSetMusicSearchResults } from "../../hooks";
 
 function MusicList({ queryParameter, bookmarked, queryFn }) {
+  const [stopPlayer] = useStopPlayerMutation();
   let queryObject = !bookmarked
     ? { songTitle: queryParameter }
     : queryParameter;
   const { data, error, isFetching } = queryFn(queryObject);
   useSetMusicSearchResults(data);
-
-  const [play, setPlay] = useState(false);
-  const [preview, setPreview] = useState(null);
-  const [previewName, setPreviewName] = useState(null);
-  const [previewLink, setPreviewLink] = useState(null);
-  const [timerIds, setTimerIds] = useState([]);
-  const { searchResults } = useSelector((state) => {
+  const { searchResults, previewPlayerData } = useSelector((state) => {
     return {
       searchResults: state.musicData.searchResults,
+      previewPlayerData: state.previewPlayerData,
     };
   });
-
   let content;
   if (isFetching) {
     content = <Skeleton times={6} className="h-10 w-full" />;
@@ -45,43 +41,20 @@ function MusicList({ queryParameter, bookmarked, queryFn }) {
     const contentData = !bookmarked ? searchResults : data;
     content = contentData.map((song) => {
       return (
-        <MusicListItem
-          key={song.trackId}
-          song={song}
-          bookmarked={bookmarked}
-          play={play}
-          setPlay={setPlay}
-          preview={preview}
-          setPreview={setPreview}
-          previewName={previewName}
-          setPreviewName={setPreviewName}
-          previewLink={previewLink}
-          setPreviewLink={setPreviewLink}
-          timerIds={timerIds}
-          setTimerIds={setTimerIds}
-        />
+        <MusicListItem key={song.trackId} song={song} bookmarked={bookmarked} />
       );
     });
   }
 
   return (
     <div className="mt-1 mb-5">
-      {preview ? (
+      {previewPlayerData.preview ? (
         <div className="sticky top-0 bg-slate-300 text-pink-900 border-8 border-slate-600">
           <div className="h-fit mb-2">
-            <button
-              onClick={() => {
-                clearTimeout(timerIds);
-                setPreview(null);
-                setPreviewName(null);
-                setPreviewLink(null);
-                setPlay(false);
-                window.Amplitude.stop();
-              }}
-            >
+            <button onClick={() => stopPlayer({ setPreviewPlayerSliceData })}>
               <div className="flex items-center">
                 <div className="italic mr-2">
-                  Now Previewing: {previewName},{" "}
+                  Now Previewing: {previewPlayerData.previewName},{" "}
                 </div>
                 <BsFillStopCircleFill />
                 <span className="ml-1">click to stop</span>
@@ -89,7 +62,11 @@ function MusicList({ queryParameter, bookmarked, queryFn }) {
             </button>
           </div>
           <div>
-            <a href={previewLink} target="blank" className="italic font-bold">
+            <a
+              href={previewPlayerData.previewLink}
+              target="blank"
+              className="italic font-bold"
+            >
               Go to song
             </a>
           </div>

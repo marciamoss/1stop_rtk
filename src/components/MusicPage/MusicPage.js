@@ -5,6 +5,7 @@ import MusicList from "./MusicList";
 import Button from "../Button";
 import { FaSearch } from "react-icons/fa";
 import { useSearchMusicQuery, useFetchUserSongsQuery } from "../../store";
+import { usePreviewPlayerReset } from "../../hooks";
 
 const MusicPage = ({ bookmarkedPage }) => {
   const [songTitle, setSongTitle] = useState("");
@@ -15,6 +16,7 @@ const MusicPage = ({ bookmarkedPage }) => {
       listFetching: state.musicData.listFetching,
     };
   });
+  usePreviewPlayerReset();
 
   return (
     <div className="container max-[770px]:text-sm text-center mt-2 p-2">
