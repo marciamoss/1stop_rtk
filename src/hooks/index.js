@@ -7,7 +7,9 @@ import useMusicAction from "./use-music-action";
 import useSetMusicSearchResults from "./use-set-music-search-results";
 import useNewsAction from "./use-news-action";
 import useSetNewsSearchResults from "./use-set-news-search-results";
+import useSetMoviesSearchResults from "./use-set-movies-search-results";
 import useFormatDate from "./use-format-date";
+import useMoviesAction from "./use-movies-action";
 export {
   useInitAuth,
   useAddUser,
@@ -19,4 +21,6 @@ export {
   useNewsAction,
   useSetNewsSearchResults,
   useFormatDate,
+  useSetMoviesSearchResults,
+  useMoviesAction,
 };

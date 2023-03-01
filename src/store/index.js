@@ -17,6 +17,12 @@ import {
   resetNewsAlertPopup,
 } from "./slices/newsDataSlice";
 import {
+  movieReducer,
+  setMovieSliceData,
+  resetMovieSliceData,
+  resetMovieAlertPopup,
+} from "./slices/movieDataSlice";
+import {
   previewPlayerDataReducer,
   setPreviewPlayerSliceData,
 } from "./slices/previewPlayerDataSlice";
@@ -25,6 +31,7 @@ import { authApi } from "./apis/authApi";
 import { userApi } from "./apis/userApi";
 import { musicApi } from "./apis/musicApi";
 import { newsApi } from "./apis/newsApi";
+import { movieApi } from "./apis/movieApi";
 import { previewPlayerApi } from "./apis/previewPlayerApi";
 
 export const store = configureStore({
@@ -33,11 +40,13 @@ export const store = configureStore({
     userData: userDataReducer,
     musicData: songReducer,
     newsData: newsReducer,
+    movieData: movieReducer,
     previewPlayerData: previewPlayerDataReducer,
     [authApi.reducerPath]: authApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
     [musicApi.reducerPath]: musicApi.reducer,
     [newsApi.reducerPath]: newsApi.reducer,
+    [movieApi.reducerPath]: movieApi.reducer,
     [previewPlayerApi.reducerPath]: previewPlayerApi.reducer,
   },
   middleware: (getDefaultMiddleware) => {
@@ -46,6 +55,7 @@ export const store = configureStore({
       .concat(userApi.middleware)
       .concat(musicApi.middleware)
       .concat(newsApi.middleware)
+      .concat(movieApi.middleware)
       .concat(previewPlayerApi.middleware);
   },
 });
@@ -58,6 +68,9 @@ export {
   resetMusicAlertPopup,
   setNewsSliceData,
   resetNewsAlertPopup,
+  setMovieSliceData,
+  resetMovieSliceData,
+  resetMovieAlertPopup,
   setPreviewPlayerSliceData,
 };
 
@@ -75,6 +88,13 @@ export {
   useFetchUserArticlesQuery,
   useDeleteUserArticleMutation,
 } from "./apis/newsApi";
+export {
+  useSearchMovieQuery,
+  useSearchMovieDetailsQuery,
+  useSaveUserMovieMutation,
+  useFetchUserMoviesQuery,
+  useDeleteUserMovieMutation,
+} from "./apis/movieApi";
 export {
   useStartPlayerMutation,
   useStopPlayerMutation,

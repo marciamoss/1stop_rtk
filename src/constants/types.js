@@ -1,7 +1,7 @@
 import LandingPage from "../components/LandingPage/LandingPage";
 import MusicPage from "../components/MusicPage/MusicPage";
 import NewsPage from "../components/NewsPage/NewsPage";
-// import MoviesPage from "../components/MoviesPage/MoviesPage";
+import MoviesPage from "../components/MoviesPage/MoviesPage";
 // import VideosPage from "../components/VideosPage/VideosPage";
 
 const APPROUTESCOMPONENTS = [
@@ -16,11 +16,11 @@ const APPROUTESCOMPONENTS = [
     r: "/news/bookmarked",
     p: <NewsPage bookmarkedPage={true} />,
   },
-  // { r: "/movies", p: <MoviesPage /> },
-  // {
-  //   r: "/movies/bookmarked",
-  //   p: <MoviesPage bookmarkedPage={true} />,
-  // },
+  { r: "/movies", p: <MoviesPage /> },
+  {
+    r: "/movies/bookmarked",
+    p: <MoviesPage bookmarkedPage={true} />,
+  },
   // { r: "/videos", p: <VideosPage /> },
   // {
   //   r: "/videos/bookmarked",
