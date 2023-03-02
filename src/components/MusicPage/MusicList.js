@@ -22,10 +22,7 @@ function MusicList({ queryParameter, bookmarked, queryFn }) {
   let content;
   if (isFetching) {
     content = <Skeleton times={6} className="h-10 w-full" />;
-  } else if (
-    searchResults.length === 0 &&
-    data?.results?.filter((s) => s.kind === "song").length > 0
-  ) {
+  } else if (searchResults.length === 0 && data?.results?.length > 0) {
     content = (
       <div className="text-center mt-28 text-green-800 font-extrabold text-2xl">
         All the songs for this title have been saved, Search for a new song
@@ -83,9 +80,7 @@ function MusicList({ queryParameter, bookmarked, queryFn }) {
         </h1>
       </div>
       <h1 className="m-2 container font-extrabold text-xl text-red-900">
-        {!error && data?.results?.filter((s) => s.kind === "song").length === 0
-          ? "No Songs Found"
-          : ""}
+        {!error && data?.results?.length === 0 ? "No Songs Found" : ""}
         {!error && bookmarked && !data?.length
           ? "You have not saved any songs yet."
           : ""}

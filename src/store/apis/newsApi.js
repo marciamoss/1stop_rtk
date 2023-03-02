@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import uniqby from "lodash.uniqby";
 const keys = require("../../keys.js");
 
 const newsApi = createApi({
@@ -19,6 +20,15 @@ const newsApi = createApi({
               .replace(/\s+/g, "")}.json?api-key=${keys.nyt.apiKey}`,
             method: "GET",
           };
+        },
+        transformResponse: (response) => {
+          response.results = uniqby(
+            response.results?.filter(
+              (n) => n.title !== "" && n.short_url !== ""
+            ),
+            "uri"
+          );
+          return response;
         },
       }),
       saveUserArticle: builder.mutation({

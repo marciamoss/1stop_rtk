@@ -18,11 +18,7 @@ function NewsList({ queryParameter, bookmarked, queryFn }) {
   let content;
   if (isFetching) {
     content = <Skeleton times={6} className="h-10 w-full" />;
-  } else if (
-    searchResults.length === 0 &&
-    data?.results?.filter((n) => n.title !== "" && n.short_url !== "").length >
-      0
-  ) {
+  } else if (searchResults.length === 0 && data?.results?.length > 0) {
     content = (
       <div className="text-center mt-28 text-green-800 font-extrabold text-2xl">
         All the articles for this section have been saved, Search for a
@@ -55,11 +51,7 @@ function NewsList({ queryParameter, bookmarked, queryFn }) {
         </h1>
       </div>
       <h1 className="m-2 container font-extrabold text-xl text-red-900">
-        {!error &&
-        data?.results?.filter((n) => n.title !== "" && n.short_url !== "")
-          .length === 0
-          ? "No Articles Found"
-          : ""}
+        {!error && data?.results?.length === 0 ? "No Articles Found" : ""}
         {!error && bookmarked && !data?.length
           ? "You have not saved any news articles yet."
           : ""}

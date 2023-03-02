@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import uniqby from "lodash.uniqby";
 const keys = require("../../keys.js");
 
 const musicApi = createApi({
@@ -18,6 +19,13 @@ const musicApi = createApi({
             url: `${keys.music.url}/search?term=${songName}`,
             method: "GET",
           };
+        },
+        transformResponse: (response) => {
+          response.results = uniqby(
+            response.results?.filter((s) => s.kind === "song"),
+            "trackId"
+          );
+          return response;
         },
       }),
       saveUserSong: builder.mutation({

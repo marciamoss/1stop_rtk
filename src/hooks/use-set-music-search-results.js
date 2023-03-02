@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSongSliceData } from "../store";
-import uniqby from "lodash.uniqby";
 
 function useSetMusicSearchResults(data) {
   const dispatch = useDispatch();
@@ -12,21 +11,15 @@ function useSetMusicSearchResults(data) {
   });
   useEffect(() => {
     if (data?.results) {
-      let searchResults = data?.results?.filter((s) => s.kind === "song");
-      dispatch(
-        setSongSliceData({
-          searchResults: uniqby(searchResults, "trackId"),
-        })
-      );
+      let searchResults = data?.results;
+      dispatch(setSongSliceData({ searchResults }));
     }
   }, [data?.results, dispatch]);
 
   useEffect(() => {
     if (savedSongs.length === 0 && data?.results) {
-      let searchResults = data?.results?.filter((s) => s.kind === "song");
-      dispatch(
-        setSongSliceData({ searchResults: uniqby(searchResults, "trackId") })
-      );
+      let searchResults = data.results;
+      dispatch(setSongSliceData({ searchResults }));
     }
   }, [data?.results, savedSongs, dispatch]);
 }
