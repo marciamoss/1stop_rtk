@@ -10,6 +10,8 @@ import useSetNewsSearchResults from "./use-set-news-search-results";
 import useSetMoviesSearchResults from "./use-set-movies-search-results";
 import useFormatDate from "./use-format-date";
 import useMoviesAction from "./use-movies-action";
+import useSetVideosSearchResults from "./use-set-videos-search-results";
+import useVideosAction from "./use-videos-action";
 export {
   useInitAuth,
   useAddUser,
@@ -23,4 +25,6 @@ export {
   useFormatDate,
   useSetMoviesSearchResults,
   useMoviesAction,
+  useSetVideosSearchResults,
+  useVideosAction,
 };

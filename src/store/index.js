@@ -23,6 +23,11 @@ import {
   resetMovieAlertPopup,
 } from "./slices/movieDataSlice";
 import {
+  videoReducer,
+  setVideoSliceData,
+  resetVideoAlertPopup,
+} from "./slices/videoDataSlice";
+import {
   previewPlayerDataReducer,
   setPreviewPlayerSliceData,
 } from "./slices/previewPlayerDataSlice";
@@ -32,6 +37,7 @@ import { userApi } from "./apis/userApi";
 import { musicApi } from "./apis/musicApi";
 import { newsApi } from "./apis/newsApi";
 import { movieApi } from "./apis/movieApi";
+import { videoApi } from "./apis/videoApi";
 import { previewPlayerApi } from "./apis/previewPlayerApi";
 
 export const store = configureStore({
@@ -41,12 +47,14 @@ export const store = configureStore({
     musicData: songReducer,
     newsData: newsReducer,
     movieData: movieReducer,
+    videoData: videoReducer,
     previewPlayerData: previewPlayerDataReducer,
     [authApi.reducerPath]: authApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
     [musicApi.reducerPath]: musicApi.reducer,
     [newsApi.reducerPath]: newsApi.reducer,
     [movieApi.reducerPath]: movieApi.reducer,
+    [videoApi.reducerPath]: videoApi.reducer,
     [previewPlayerApi.reducerPath]: previewPlayerApi.reducer,
   },
   middleware: (getDefaultMiddleware) => {
@@ -56,6 +64,7 @@ export const store = configureStore({
       .concat(musicApi.middleware)
       .concat(newsApi.middleware)
       .concat(movieApi.middleware)
+      .concat(videoApi.middleware)
       .concat(previewPlayerApi.middleware);
   },
 });
@@ -71,6 +80,8 @@ export {
   setMovieSliceData,
   resetMovieSliceData,
   resetMovieAlertPopup,
+  setVideoSliceData,
+  resetVideoAlertPopup,
   setPreviewPlayerSliceData,
 };
 
@@ -95,6 +106,12 @@ export {
   useFetchUserMoviesQuery,
   useDeleteUserMovieMutation,
 } from "./apis/movieApi";
+export {
+  useSearchVideosQuery,
+  useSaveUserVideoMutation,
+  useFetchUserVideosQuery,
+  useDeleteUserVideoMutation,
+} from "./apis/videoApi";
 export {
   useStartPlayerMutation,
   useStopPlayerMutation,

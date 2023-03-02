@@ -2,7 +2,7 @@ import LandingPage from "../components/LandingPage/LandingPage";
 import MusicPage from "../components/MusicPage/MusicPage";
 import NewsPage from "../components/NewsPage/NewsPage";
 import MoviesPage from "../components/MoviesPage/MoviesPage";
-// import VideosPage from "../components/VideosPage/VideosPage";
+import VideosPage from "../components/VideosPage/VideosPage";
 
 const APPROUTESCOMPONENTS = [
   { r: "/", p: <LandingPage /> },
@@ -21,11 +21,11 @@ const APPROUTESCOMPONENTS = [
     r: "/movies/bookmarked",
     p: <MoviesPage bookmarkedPage={true} />,
   },
-  // { r: "/videos", p: <VideosPage /> },
-  // {
-  //   r: "/videos/bookmarked",
-  //   p: <VideosPage bookmarkedPage={true} />,
-  // },
+  { r: "/videos", p: <VideosPage /> },
+  {
+    r: "/videos/bookmarked",
+    p: <VideosPage bookmarkedPage={true} />,
+  },
 ];
 
 const SECTIONS = [
