@@ -51,8 +51,10 @@ function NewsList({ queryParameter, bookmarked, queryFn }) {
         </h1>
       </div>
       <h1 className="m-2 container font-extrabold text-xl text-red-900">
-        {!error && data?.results?.length === 0 ? "No Articles Found" : ""}
-        {!error && bookmarked && !data?.length
+        {!error && data?.results?.length === 0 && !isFetching
+          ? "No Articles Found"
+          : ""}
+        {!error && bookmarked && !data?.length && !isFetching
           ? "You have not saved any news articles yet."
           : ""}
       </h1>

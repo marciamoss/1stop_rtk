@@ -51,8 +51,10 @@ function VideosList({ queryParameter, bookmarked, queryFn }) {
         </h1>
       </div>
       <h1 className="m-2 container font-extrabold text-xl text-red-900">
-        {!error && data?.items?.length === 0 ? "No Videos Found" : ""}
-        {!error && bookmarked && !data?.length
+        {!error && data?.items?.length === 0 && !isFetching
+          ? "No Videos Found"
+          : ""}
+        {!error && bookmarked && !data?.length && !isFetching
           ? "You have not saved any videos yet."
           : ""}
       </h1>

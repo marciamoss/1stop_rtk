@@ -61,8 +61,8 @@ function MoviesList({ queryParameter, bookmarked, queryFn }) {
         </h1>
       </div>
       <h1 className="m-2 container font-extrabold text-xl text-red-900">
-        {noMoviesFound && !bookmarked ? "No Movies Found" : ""}
-        {!error && bookmarked && !data?.length
+        {noMoviesFound && !bookmarked && !listFetching ? "No Movies Found" : ""}
+        {!error && bookmarked && !data?.length && !isFetching
           ? "You have not saved any movies yet."
           : ""}
       </h1>
