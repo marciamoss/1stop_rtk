@@ -131,26 +131,8 @@ function MusicListItem({ song, bookmarked }) {
                   &nbsp;&nbsp;Album: {song.collectionName}
                 </a>
               </p>
-              {!previewPlayerData.play ? (
-                <div className="h-5">
-                  <button
-                    disabled={
-                      previewPlayerData.preview &&
-                      song.previewUrl !== previewPlayerData.preview
-                    }
-                    onClick={() => {
-                      startPlayer({ song, setPreviewPlayerSliceData });
-                    }}
-                  >
-                    <div className="flex items-center text-green-900">
-                      <span className="mr-1 text-sm">30 sec preview</span>
-                      <BsFillPlayCircleFill />
-                      <span className="ml-1 text-sm">click to start</span>
-                    </div>
-                  </button>
-                </div>
-              ) : previewPlayerData.preview &&
-                song.previewUrl === previewPlayerData.preview ? (
+              {previewPlayerData.preview &&
+              song.previewUrl === previewPlayerData.preview ? (
                 <div className="h-5">
                   <button
                     onClick={() => stopPlayer({ setPreviewPlayerSliceData })}
@@ -164,9 +146,15 @@ function MusicListItem({ song, bookmarked }) {
                 </div>
               ) : (
                 <div className="h-5">
-                  <button disabled={true}>
-                    <div className="flex items-center bg-gray-300 text-slate-500 text-sm">
-                      Stop the current to preview this one
+                  <button
+                    onClick={() => {
+                      startPlayer({ song, setPreviewPlayerSliceData });
+                    }}
+                  >
+                    <div className="flex items-center text-green-900">
+                      <span className="mr-1 text-sm">30 sec preview</span>
+                      <BsFillPlayCircleFill />
+                      <span className="ml-1 text-sm">click to start</span>
                     </div>
                   </button>
                 </div>

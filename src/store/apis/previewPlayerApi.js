@@ -13,8 +13,16 @@ const previewPlayerApi = createApi({
   }),
   endpoints: (builder) => ({
     startPlayer: builder.mutation({
-      queryFn: async ({ song, setPreviewPlayerSliceData }, { dispatch }) => {
+      queryFn: async (
+        { song, setPreviewPlayerSliceData },
+        { dispatch, getState }
+      ) => {
         if (window.Amplitude) {
+          await dispatch(
+            previewPlayerApi.endpoints.stopPlayer.initiate({
+              setPreviewPlayerSliceData,
+            })
+          );
           window.Amplitude.playNow({
             url: `${song.previewUrl}`,
           });
