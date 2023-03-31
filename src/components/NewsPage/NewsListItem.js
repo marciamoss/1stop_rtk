@@ -12,15 +12,9 @@ import { useDeleteUserArticleMutation } from "../../store";
 import { useNewsAction, useFormatDate } from "../../hooks";
 
 function NewsListItem({ news, bookmarked }) {
-  const { authUserId, savedId, saveFailId, deleteFailId } = useSelector(
-    (state) => {
-      return {
-        savedId: state.newsData.savedId,
-        saveFailId: state.newsData.saveFailId,
-        deleteFailId: state.newsData.deleteFailId,
-        authUserId: state.authData.authUserId,
-      };
-    }
+  const { authUserId } = useSelector((state) => state.authData);
+  const { savedId, saveFailId, deleteFailId } = useSelector(
+    (state) => state.newsData
   );
   const [rDate] = useFormatDate(news.published_date);
   const [deleteConfirm, setDeleteConfirm] = useState(false);

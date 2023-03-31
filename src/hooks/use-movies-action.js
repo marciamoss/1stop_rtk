@@ -14,14 +14,7 @@ function useMoviesAction(authUserId) {
   useFetchUserMoviesQuery(authUserId);
 
   const { savedMovies, savedId, saveFailId, deleteFailId } = useSelector(
-    (state) => {
-      return {
-        savedMovies: state.movieData.savedMovies,
-        savedId: state.movieData.savedId,
-        saveFailId: state.movieData.saveFailId,
-        deleteFailId: state.movieData.deleteFailId,
-      };
-    }
+    (state) => state.movieData
   );
   const saveMovie = (movie) => {
     if (savedMovies.filter((s) => s.id === movie.id).length > 0) {

@@ -9,12 +9,8 @@ import { useSearchVideosQuery, useFetchUserVideosQuery } from "../../store";
 const VideosPage = ({ bookmarkedPage }) => {
   const [videoTitle, setVideoTitle] = useState("");
   const [showList, setShowList] = useState(false);
-  const { authUserId, listFetching } = useSelector((state) => {
-    return {
-      authUserId: state.authData.authUserId,
-      listFetching: state.videoData.listFetching,
-    };
-  });
+  const { authUserId } = useSelector((state) => state.authData);
+  const { listFetching } = useSelector((state) => state.videoData);
 
   return (
     <div className="container max-[770px]:text-sm text-center mt-2 p-2">

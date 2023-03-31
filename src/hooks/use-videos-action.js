@@ -14,14 +14,7 @@ function useVideosAction(authUserId) {
   useFetchUserVideosQuery(authUserId);
 
   const { savedVideos, savedId, saveFailId, deleteFailId } = useSelector(
-    (state) => {
-      return {
-        savedVideos: state.videoData.savedVideos,
-        savedId: state.videoData.savedId,
-        saveFailId: state.videoData.saveFailId,
-        deleteFailId: state.videoData.deleteFailId,
-      };
-    }
+    (state) => state.videoData
   );
   const saveVideo = (video) => {
     if (savedVideos.filter((s) => s.id === video.id).length > 0) {

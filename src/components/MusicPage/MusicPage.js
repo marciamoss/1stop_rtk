@@ -10,12 +10,8 @@ import { usePreviewPlayerReset } from "../../hooks";
 const MusicPage = ({ bookmarkedPage }) => {
   const [songTitle, setSongTitle] = useState("");
   const [showList, setShowList] = useState(false);
-  const { authUserId, listFetching } = useSelector((state) => {
-    return {
-      authUserId: state.authData.authUserId,
-      listFetching: state.musicData.listFetching,
-    };
-  });
+  const { authUserId } = useSelector((state) => state.authData);
+  const { listFetching } = useSelector((state) => state.musicData);
   usePreviewPlayerReset();
 
   return (

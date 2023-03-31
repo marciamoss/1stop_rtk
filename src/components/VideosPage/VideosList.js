@@ -11,11 +11,7 @@ function VideosList({ queryParameter, bookmarked, queryFn }) {
 
   const { data, error, isFetching } = queryFn(queryObject);
   useSetVideosSearchResults(data);
-  const { searchResults } = useSelector((state) => {
-    return {
-      searchResults: state.videoData.searchResults,
-    };
-  });
+  const { searchResults } = useSelector((state) => state.videoData);
   let content;
   if (isFetching) {
     content = <Skeleton times={6} className="h-10 w-full" />;

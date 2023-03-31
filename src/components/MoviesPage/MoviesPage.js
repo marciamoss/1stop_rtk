@@ -15,12 +15,8 @@ const MoviesPage = ({ bookmarkedPage }) => {
   const [movieTitle, setMovieTitle] = useState("");
   const [showList, setShowList] = useState(false);
 
-  const { authUserId, listFetching } = useSelector((state) => {
-    return {
-      authUserId: state.authData.authUserId,
-      listFetching: state.movieData.listFetching,
-    };
-  });
+  const { listFetching } = useSelector((state) => state.movieData);
+  const { authUserId } = useSelector((state) => state.authData);
 
   const handleClick = async () => {
     setShowList(true);

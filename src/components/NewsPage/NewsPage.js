@@ -11,12 +11,8 @@ import { useSearchNewsQuery, useFetchUserArticlesQuery } from "../../store";
 const NewsPage = ({ bookmarkedPage }) => {
   const [section, setSection] = useState("");
   const [showList, setShowList] = useState(false);
-  const { authUserId, listFetching } = useSelector((state) => {
-    return {
-      authUserId: state.authData.authUserId,
-      listFetching: state.newsData.listFetching,
-    };
-  });
+  const { authUserId } = useSelector((state) => state.authData);
+  const { listFetching } = useSelector((state) => state.newsData);
 
   return (
     <div className="container max-[770px]:text-sm text-xl text-center mt-2 p-2">

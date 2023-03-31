@@ -14,14 +14,7 @@ function useMusicAction(authUserId) {
   useFetchUserSongsQuery(authUserId);
 
   const { savedSongs, savedId, saveFailId, deleteFailId } = useSelector(
-    (state) => {
-      return {
-        savedSongs: state.musicData.savedSongs,
-        savedId: state.musicData.savedId,
-        saveFailId: state.musicData.saveFailId,
-        deleteFailId: state.musicData.deleteFailId,
-      };
-    }
+    (state) => state.musicData
   );
   const saveSong = (song) => {
     if (savedSongs.filter((s) => s.trackId === song.trackId).length > 0) {

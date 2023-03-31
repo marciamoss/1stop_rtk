@@ -14,16 +14,10 @@ import { useMoviesAction, useFormatDate } from "../../hooks";
 function MoviesListItem({ movie, bookmarked }) {
   const [rDate] = useFormatDate(movie?.releaseDate);
 
-  const { authUserId, savedId, saveFailId, deleteFailId } = useSelector(
-    (state) => {
-      return {
-        savedId: state.movieData.savedId,
-        saveFailId: state.movieData.saveFailId,
-        deleteFailId: state.movieData.deleteFailId,
-        authUserId: state.authData.authUserId,
-      };
-    }
+  const { savedId, saveFailId, deleteFailId } = useSelector(
+    (state) => state.movieData
   );
+  const { authUserId } = useSelector((state) => state.authData);
   const [deleteConfirm, setDeleteConfirm] = useState(false);
   const [deleteUserMovie] = useDeleteUserMovieMutation();
 

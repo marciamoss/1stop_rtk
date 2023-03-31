@@ -14,14 +14,7 @@ const Header = () => {
   const [logOut] = useLogOutMutation();
 
   const { signedIn, userName, showError, errorMessage } = useSelector(
-    (state) => {
-      return {
-        signedIn: state.authData.signedIn,
-        userName: state.authData.userName,
-        showError: state.authData.showError,
-        errorMessage: state.authData.errorMessage,
-      };
-    }
+    (state) => state.authData
   );
 
   const showHeader =

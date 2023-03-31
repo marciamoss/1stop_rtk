@@ -4,11 +4,7 @@ import { setSongSliceData } from "../store";
 
 function useSetMusicSearchResults(data) {
   const dispatch = useDispatch();
-  const { savedSongs } = useSelector((state) => {
-    return {
-      savedSongs: state.musicData.savedSongs,
-    };
-  });
+  const { savedSongs } = useSelector((state) => state.musicData);
   useEffect(() => {
     if (data?.results) {
       let searchResults = data?.results;

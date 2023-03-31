@@ -14,14 +14,7 @@ function useNewsAction(authUserId) {
   useFetchUserArticlesQuery(authUserId);
 
   const { savedNews, savedId, saveFailId, deleteFailId } = useSelector(
-    (state) => {
-      return {
-        savedNews: state.newsData.savedNews,
-        savedId: state.newsData.savedId,
-        saveFailId: state.newsData.saveFailId,
-        deleteFailId: state.newsData.deleteFailId,
-      };
-    }
+    (state) => state.newsData
   );
   const saveNews = (news) => {
     if (savedNews.filter((s) => s.uri === news.uri).length > 0) {

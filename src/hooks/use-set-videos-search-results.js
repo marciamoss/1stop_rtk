@@ -5,11 +5,7 @@ import uniqby from "lodash.uniqby";
 
 function useSetVideosSearchResults(data) {
   const dispatch = useDispatch();
-  const { savedVideos } = useSelector((state) => {
-    return {
-      savedVideos: state.videoData.savedVideos,
-    };
-  });
+  const { savedVideos } = useSelector((state) => state.videoData);
   useEffect(() => {
     if (data?.items) {
       let searchResults = data?.items;

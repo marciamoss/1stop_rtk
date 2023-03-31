@@ -4,13 +4,8 @@ import { useAddUserMutation } from "../store";
 
 const useAddUser = () => {
   const [addUser] = useAddUserMutation();
-
-  const { authUserId, newUser } = useSelector((state) => {
-    return {
-      authUserId: state.authData.authUserId,
-      newUser: state.userData.newUser,
-    };
-  });
+  const { authUserId } = useSelector((state) => state.authData);
+  const { newUser } = useSelector((state) => state.userData);
 
   useEffect(() => {
     if (newUser) {

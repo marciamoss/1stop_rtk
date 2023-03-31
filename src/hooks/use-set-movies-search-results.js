@@ -5,12 +5,8 @@ import uniqby from "lodash.uniqby";
 
 function useSetMoviesSearchResults() {
   const dispatch = useDispatch();
-  const { savedMovies, originalData } = useSelector((state) => {
-    return {
-      savedMovies: state.movieData.savedMovies,
-      originalData: state.movieData.originalData,
-    };
-  });
+  const { savedMovies, originalData } = useSelector((state) => state.movieData);
+
   useEffect(() => {
     if (originalData) {
       let searchResults = originalData;

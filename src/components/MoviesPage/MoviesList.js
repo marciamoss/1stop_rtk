@@ -17,15 +17,7 @@ function MoviesList({ queryParameter, bookmarked, queryFn }) {
     searchResults,
     searchError,
     noMoviesFound,
-  } = useSelector((state) => {
-    return {
-      originalData: state.movieData.originalData,
-      searchResults: state.movieData.searchResults,
-      listFetching: state.movieData.listFetching,
-      searchError: state.movieData.searchError,
-      noMoviesFound: state.movieData.noMoviesFound,
-    };
-  });
+  } = useSelector((state) => state.movieData);
   let content;
   if ((!bookmarked && listFetching) || (isFetching && bookmarked)) {
     content = <Skeleton times={6} className="h-10 w-full" />;

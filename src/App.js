@@ -8,12 +8,7 @@ import LandingPage from "./components/LandingPage/LandingPage";
 import { APPROUTES, APPROUTESCOMPONENTS } from "./constants/types";
 
 const App = () => {
-  const { authUserId, signedIn } = useSelector((state) => {
-    return {
-      signedIn: state.authData.signedIn,
-      authUserId: state.authData.authUserId,
-    };
-  });
+  const { authUserId, signedIn } = useSelector((state) => state.authData);
   useInitAuth();
   useFetchUserQuery(authUserId);
   useAddUser();

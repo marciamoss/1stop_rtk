@@ -19,16 +19,11 @@ import {
 import { useMusicAction } from "../../hooks";
 
 function MusicListItem({ song, bookmarked }) {
-  const { authUserId, savedId, saveFailId, deleteFailId, previewPlayerData } =
-    useSelector((state) => {
-      return {
-        savedId: state.musicData.savedId,
-        saveFailId: state.musicData.saveFailId,
-        deleteFailId: state.musicData.deleteFailId,
-        previewPlayerData: state.previewPlayerData,
-        authUserId: state.authData.authUserId,
-      };
-    });
+  const { authUserId } = useSelector((state) => state.authData);
+  const { savedId, saveFailId, deleteFailId } = useSelector(
+    (state) => state.musicData
+  );
+  const { previewPlayerData } = useSelector((state) => state);
   const [deleteConfirm, setDeleteConfirm] = useState(false);
   const [deleteUserSong] = useDeleteUserSongMutation();
   const [startPlayer] = useStartPlayerMutation();

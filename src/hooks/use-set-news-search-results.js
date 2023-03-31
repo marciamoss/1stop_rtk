@@ -4,11 +4,7 @@ import { setNewsSliceData } from "../store";
 
 function useSetNewsSearchResults(data) {
   const dispatch = useDispatch();
-  const { savedNews } = useSelector((state) => {
-    return {
-      savedNews: state.newsData.savedNews,
-    };
-  });
+  const { savedNews } = useSelector((state) => state.newsData);
   useEffect(() => {
     if (data?.results) {
       dispatch(setNewsSliceData({ searchResults: data?.results }));

@@ -13,12 +13,8 @@ function MusicList({ queryParameter, bookmarked, queryFn }) {
     : queryParameter;
   const { data, error, isFetching } = queryFn(queryObject);
   useSetMusicSearchResults(data);
-  const { searchResults, previewPlayerData } = useSelector((state) => {
-    return {
-      searchResults: state.musicData.searchResults,
-      previewPlayerData: state.previewPlayerData,
-    };
-  });
+  const { searchResults } = useSelector((state) => state.musicData);
+  const { previewPlayerData } = useSelector((state) => state);
   let content;
   if (isFetching) {
     content = <Skeleton times={6} className="h-10 w-full" />;

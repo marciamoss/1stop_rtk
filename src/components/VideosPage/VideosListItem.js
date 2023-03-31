@@ -11,15 +11,9 @@ import { useDeleteUserVideoMutation } from "../../store";
 import { useVideosAction } from "../../hooks";
 
 function VideosListItem({ video, bookmarked }) {
-  const { authUserId, savedId, saveFailId, deleteFailId } = useSelector(
-    (state) => {
-      return {
-        savedId: state.videoData.savedId,
-        saveFailId: state.videoData.saveFailId,
-        deleteFailId: state.videoData.deleteFailId,
-        authUserId: state.authData.authUserId,
-      };
-    }
+  const { authUserId } = useSelector((state) => state.authData);
+  const { savedId, saveFailId, deleteFailId } = useSelector(
+    (state) => state.videoData
   );
   const [deleteConfirm, setDeleteConfirm] = useState(false);
   const [deleteUserVideo] = useDeleteUserVideoMutation();

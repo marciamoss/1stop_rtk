@@ -9,11 +9,7 @@ function NewsList({ queryParameter, bookmarked, queryFn }) {
   const { data, error, isFetching } = queryFn(queryObject);
   useSetNewsSearchResults(data);
 
-  const { searchResults } = useSelector((state) => {
-    return {
-      searchResults: state.newsData.searchResults,
-    };
-  });
+  const { searchResults } = useSelector((state) => state.newsData);
 
   let content;
   if (isFetching) {

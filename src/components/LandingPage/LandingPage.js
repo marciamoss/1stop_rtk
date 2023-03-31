@@ -11,12 +11,7 @@ const LandingPage = () => {
   const location = useLocation();
   const showLanding =
     APPROUTES.filter((r) => r === location.pathname).length > 0;
-  const { signedIn, errorMessage } = useSelector((state) => {
-    return {
-      signedIn: state.authData.signedIn,
-      errorMessage: state.authData.errorMessage,
-    };
-  });
+  const { signedIn, errorMessage } = useSelector((state) => state.authData);
   if (!showLanding) {
     return;
   }
