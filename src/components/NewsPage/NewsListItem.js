@@ -22,7 +22,7 @@ function NewsListItem({ news, bookmarked }) {
       };
     }
   );
-  const { rDate } = useFormatDate(news.published_date);
+  const [rDate] = useFormatDate(news.published_date);
   const [deleteConfirm, setDeleteConfirm] = useState(false);
   const [deleteUserArticle] = useDeleteUserArticleMutation();
 

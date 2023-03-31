@@ -12,7 +12,7 @@ import { useDeleteUserMovieMutation } from "../../store";
 import { useMoviesAction, useFormatDate } from "../../hooks";
 
 function MoviesListItem({ movie, bookmarked }) {
-  const { rDate } = useFormatDate(movie?.releaseDate);
+  const [rDate] = useFormatDate(movie?.releaseDate);
 
   const { authUserId, savedId, saveFailId, deleteFailId } = useSelector(
     (state) => {
