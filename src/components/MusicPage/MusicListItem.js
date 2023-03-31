@@ -29,7 +29,7 @@ function MusicListItem({ song, bookmarked }) {
   const [startPlayer] = useStartPlayerMutation();
   const [stopPlayer] = useStopPlayerMutation();
 
-  const { saveSong, previouslySaved } = useMusicAction(authUserId);
+  const [saveSong, previouslySaved] = useMusicAction(authUserId);
 
   const handleAddRemove = () => {
     if (!bookmarked) {

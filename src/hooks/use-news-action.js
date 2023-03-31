@@ -46,10 +46,7 @@ function useNewsAction(authUserId) {
     }
   }, [savedId, saveFailId, deleteFailId, dispatch, resetAlert]);
 
-  return {
-    saveNews,
-    previouslySaved,
-  };
+  return [saveNews, previouslySaved];
 }
 
 export default useNewsAction;

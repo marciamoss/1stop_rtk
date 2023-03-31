@@ -18,7 +18,7 @@ function VideosListItem({ video, bookmarked }) {
   const [deleteConfirm, setDeleteConfirm] = useState(false);
   const [deleteUserVideo] = useDeleteUserVideoMutation();
 
-  const { saveVideo, previouslySaved } = useVideosAction(authUserId);
+  const [saveVideo, previouslySaved] = useVideosAction(authUserId);
 
   const handleAddRemove = () => {
     if (!bookmarked) {

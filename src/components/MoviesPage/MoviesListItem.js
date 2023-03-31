@@ -21,7 +21,7 @@ function MoviesListItem({ movie, bookmarked }) {
   const [deleteConfirm, setDeleteConfirm] = useState(false);
   const [deleteUserMovie] = useDeleteUserMovieMutation();
 
-  const { saveMovie, previouslySaved } = useMoviesAction(authUserId);
+  const [saveMovie, previouslySaved] = useMoviesAction(authUserId);
 
   const handleAddRemove = () => {
     if (!bookmarked) {

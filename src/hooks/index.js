@@ -1,6 +1,5 @@
 import useInitAuth from "./use-init-auth";
 import useAddUser from "./use-add-user";
-import useCheckUser from "./use-check-user";
 import useCheckRoute from "./use-check-route";
 import usePreviewPlayerReset from "./use-preview-player-reset";
 import useMusicAction from "./use-music-action";
@@ -15,7 +14,6 @@ import useVideosAction from "./use-videos-action";
 export {
   useInitAuth,
   useAddUser,
-  useCheckUser,
   useCheckRoute,
   usePreviewPlayerReset,
   useMusicAction,

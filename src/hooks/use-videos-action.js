@@ -46,10 +46,7 @@ function useVideosAction(authUserId) {
     }
   }, [savedId, saveFailId, deleteFailId, dispatch, resetAlert]);
 
-  return {
-    saveVideo,
-    previouslySaved,
-  };
+  return [saveVideo, previouslySaved];
 }
 
 export default useVideosAction;

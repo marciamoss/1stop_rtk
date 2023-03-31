@@ -20,7 +20,7 @@ function NewsListItem({ news, bookmarked }) {
   const [deleteConfirm, setDeleteConfirm] = useState(false);
   const [deleteUserArticle] = useDeleteUserArticleMutation();
 
-  const { saveNews, previouslySaved } = useNewsAction(authUserId);
+  const [saveNews, previouslySaved] = useNewsAction(authUserId);
 
   const handleAddRemove = () => {
     if (!bookmarked) {

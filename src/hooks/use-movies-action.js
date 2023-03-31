@@ -46,10 +46,7 @@ function useMoviesAction(authUserId) {
     }
   }, [savedId, saveFailId, deleteFailId, dispatch, resetAlert]);
 
-  return {
-    saveMovie,
-    previouslySaved,
-  };
+  return [saveMovie, previouslySaved];
 }
 
 export default useMoviesAction;

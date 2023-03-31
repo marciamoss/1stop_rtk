@@ -46,10 +46,7 @@ function useMusicAction(authUserId) {
     }
   }, [savedId, saveFailId, deleteFailId, dispatch, resetAlert]);
 
-  return {
-    saveSong,
-    previouslySaved,
-  };
+  return [saveSong, previouslySaved];
 }
 
 export default useMusicAction;
