@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import ExpandablePanel from "../ExpandablePanel";
 import ConfirmModal from "../ConfirmModal";
 import {
@@ -19,6 +20,7 @@ import {
 import { useMusicAction } from "../../hooks";
 
 function MusicListItem({ song, bookmarked }) {
+  const navigate = useNavigate();
   const { authUserId } = useSelector((state) => state.authData);
   const { savedId, saveFailId, deleteFailId } = useSelector(
     (state) => state.musicData
@@ -32,10 +34,17 @@ function MusicListItem({ song, bookmarked }) {
   const [saveSong, previouslySaved] = useMusicAction(authUserId);
 
   const handleAddRemove = () => {
-    if (!bookmarked) {
-      saveSong(song);
+    const authUserIdLocal = localStorage.getItem("1stop_rtk")
+      ? JSON.parse(localStorage.getItem("1stop_rtk")).authUserId
+      : "";
+    if (authUserId === authUserIdLocal) {
+      if (!bookmarked) {
+        saveSong(song);
+      } else {
+        setDeleteConfirm(true);
+      }
     } else {
-      setDeleteConfirm(true);
+      navigate("/");
     }
   };
   const header = (

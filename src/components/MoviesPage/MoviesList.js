@@ -2,9 +2,10 @@ import React from "react";
 import { useSelector } from "react-redux";
 import Skeleton from "../Skeleton";
 import MoviesListItem from "./MoviesListItem";
-import { useSetMoviesSearchResults } from "../../hooks";
+import { useSetMoviesSearchResults, useCheckAuthStatus } from "../../hooks";
 
 function MoviesList({ queryParameter, bookmarked, queryFn }) {
+  useCheckAuthStatus();
   let queryObject = !bookmarked
     ? { movieTitle: queryParameter }
     : queryParameter;

@@ -4,9 +4,10 @@ import Skeleton from "../Skeleton";
 import MusicListItem from "./MusicListItem";
 import { BsFillStopCircleFill } from "react-icons/bs";
 import { setPreviewPlayerSliceData, useStopPlayerMutation } from "../../store";
-import { useSetMusicSearchResults } from "../../hooks";
+import { useSetMusicSearchResults, useCheckAuthStatus } from "../../hooks";
 
 function MusicList({ queryParameter, bookmarked, queryFn }) {
+  useCheckAuthStatus();
   const [stopPlayer] = useStopPlayerMutation();
   let queryObject = !bookmarked
     ? { songTitle: queryParameter }

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import ExpandablePanel from "../ExpandablePanel";
 import ConfirmModal from "../ConfirmModal";
 import {
@@ -11,6 +12,7 @@ import { useDeleteUserVideoMutation } from "../../store";
 import { useVideosAction } from "../../hooks";
 
 function VideosListItem({ video, bookmarked }) {
+  const navigate = useNavigate();
   const { authUserId } = useSelector((state) => state.authData);
   const { savedId, saveFailId, deleteFailId } = useSelector(
     (state) => state.videoData
@@ -21,10 +23,17 @@ function VideosListItem({ video, bookmarked }) {
   const [saveVideo, previouslySaved] = useVideosAction(authUserId);
 
   const handleAddRemove = () => {
-    if (!bookmarked) {
-      saveVideo(video);
+    const authUserIdLocal = localStorage.getItem("1stop_rtk")
+      ? JSON.parse(localStorage.getItem("1stop_rtk")).authUserId
+      : "";
+    if (authUserId === authUserIdLocal) {
+      if (!bookmarked) {
+        saveVideo(video);
+      } else {
+        setDeleteConfirm(true);
+      }
     } else {
-      setDeleteConfirm(true);
+      navigate("/");
     }
   };
   const header = (

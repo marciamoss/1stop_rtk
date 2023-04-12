@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import ExpandablePanel from "../ExpandablePanel";
 import ConfirmModal from "../ConfirmModal";
 import {
@@ -12,6 +13,7 @@ import { useDeleteUserArticleMutation } from "../../store";
 import { useNewsAction, useFormatDate } from "../../hooks";
 
 function NewsListItem({ news, bookmarked }) {
+  const navigate = useNavigate();
   const { authUserId } = useSelector((state) => state.authData);
   const { savedId, saveFailId, deleteFailId } = useSelector(
     (state) => state.newsData
@@ -23,10 +25,17 @@ function NewsListItem({ news, bookmarked }) {
   const [saveNews, previouslySaved] = useNewsAction(authUserId);
 
   const handleAddRemove = () => {
-    if (!bookmarked) {
-      saveNews(news);
+    const authUserIdLocal = localStorage.getItem("1stop_rtk")
+      ? JSON.parse(localStorage.getItem("1stop_rtk")).authUserId
+      : "";
+    if (authUserId === authUserIdLocal) {
+      if (!bookmarked) {
+        saveNews(news);
+      } else {
+        setDeleteConfirm(true);
+      }
     } else {
-      setDeleteConfirm(true);
+      navigate("/");
     }
   };
   const header = (

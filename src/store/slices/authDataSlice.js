@@ -4,10 +4,14 @@ const initialState = {
   signedIn: false,
   authUserId: null,
   userName: null,
+  email: null,
   showError: false,
   errorMessage: null,
   token: null,
   validRoute: false,
+  showAutoLogout: false,
+  showAutoLogin: false,
+  showLoginSwitch: false,
 };
 const authDataSlice = createSlice({
   name: "authData",

@@ -2,9 +2,10 @@ import React from "react";
 import { useSelector } from "react-redux";
 import Skeleton from "../Skeleton";
 import NewsListItem from "./NewsListItem";
-import { useSetNewsSearchResults } from "../../hooks";
+import { useSetNewsSearchResults, useCheckAuthStatus } from "../../hooks";
 
 function NewsList({ queryParameter, bookmarked, queryFn }) {
+  useCheckAuthStatus();
   let queryObject = !bookmarked ? { section: queryParameter } : queryParameter;
   const { data, error, isFetching } = queryFn(queryObject);
   useSetNewsSearchResults(data);

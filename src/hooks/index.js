@@ -11,6 +11,7 @@ import useFormatDate from "./use-format-date";
 import useMoviesAction from "./use-movies-action";
 import useSetVideosSearchResults from "./use-set-videos-search-results";
 import useVideosAction from "./use-videos-action";
+import useCheckAuthStatus from "./use-check-auth-status";
 export {
   useInitAuth,
   useAddUser,
@@ -25,4 +26,5 @@ export {
   useMoviesAction,
   useSetVideosSearchResults,
   useVideosAction,
+  useCheckAuthStatus,
 };

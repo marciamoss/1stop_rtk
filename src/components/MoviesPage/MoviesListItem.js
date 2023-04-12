@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import ExpandablePanel from "../ExpandablePanel";
 import ConfirmModal from "../ConfirmModal";
 import {
@@ -12,6 +13,7 @@ import { useDeleteUserMovieMutation } from "../../store";
 import { useMoviesAction, useFormatDate } from "../../hooks";
 
 function MoviesListItem({ movie, bookmarked }) {
+  const navigate = useNavigate();
   const [rDate] = useFormatDate(movie?.releaseDate);
 
   const { savedId, saveFailId, deleteFailId } = useSelector(
@@ -24,10 +26,17 @@ function MoviesListItem({ movie, bookmarked }) {
   const [saveMovie, previouslySaved] = useMoviesAction(authUserId);
 
   const handleAddRemove = () => {
-    if (!bookmarked) {
-      saveMovie(movie);
+    const authUserIdLocal = localStorage.getItem("1stop_rtk")
+      ? JSON.parse(localStorage.getItem("1stop_rtk")).authUserId
+      : "";
+    if (authUserId === authUserIdLocal) {
+      if (!bookmarked) {
+        saveMovie(movie);
+      } else {
+        setDeleteConfirm(true);
+      }
     } else {
-      setDeleteConfirm(true);
+      navigate("/");
     }
   };
 
