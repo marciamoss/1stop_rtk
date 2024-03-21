@@ -86,11 +86,7 @@ function NewsListItem({ news, bookmarked }) {
         <div className="text-base max-[770px]:text-sm">
           <div key={news.uri} className="content flex py-2">
             {news.multimedia ? (
-              <a
-                href={news.short_url}
-                target="blank"
-                className="talic text-blue-600"
-              >
+              <a href={news.url} target="blank" className="talic text-blue-600">
                 <img
                   className="inline h-20 w-20"
                   src={news.multimedia[0].url}
@@ -99,7 +95,7 @@ function NewsListItem({ news, bookmarked }) {
               </a>
             ) : (
               <a
-                href={news.short_url}
+                href={news.url}
                 target="blank"
                 className="italic text-blue-600"
               >
@@ -111,7 +107,7 @@ function NewsListItem({ news, bookmarked }) {
               <p>
                 {news.abstract}
                 <a
-                  href={news.short_url}
+                  href={news.url}
                   target="blank"
                   className="italic text-blue-600 visited:text-purple-600"
                 >

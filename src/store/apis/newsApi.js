@@ -23,9 +23,7 @@ const newsApi = createApi({
         },
         transformResponse: (response) => {
           response.results = uniqby(
-            response.results?.filter(
-              (n) => n.title !== "" && n.short_url !== ""
-            ),
+            response.results?.filter((n) => n.title !== "" && n.url !== ""),
             "uri"
           );
           return response;
