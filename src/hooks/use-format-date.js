@@ -14,11 +14,15 @@ function useFormatDate(actualDate) {
         dt.getDate().toString().length === 1
           ? `0${dt.getDate()}`
           : dt.getDate();
-      setRDate(
-        `${dte}${new Intl.DateTimeFormat("en-US", { month: "short" }).format(
-          dt
-        )}${dt.getFullYear()}`
-      );
+      if (!dte) {
+        setRDate("");
+      } else {
+        setRDate(
+          `${dte}${new Intl.DateTimeFormat("en-US", { month: "short" }).format(
+            dt
+          )}${dt.getFullYear()}`
+        );
+      }
     }
   }, [actualDate]);
 

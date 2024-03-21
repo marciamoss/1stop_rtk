@@ -22,7 +22,7 @@ const useCheckAuthStatus = () => {
     } else {
       navigate("/");
     }
-  }, [authUserId, authUserId_redux]);
+  }, [authUserId, authUserId_redux, dispatch, navigate]);
 };
 
 export default useCheckAuthStatus;
