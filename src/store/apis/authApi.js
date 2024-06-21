@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import jwt_decode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 const keys = require("../../keys.js");
 let initial = {
   signedIn: false,
@@ -30,7 +30,7 @@ const authApi = createApi({
               })
             );
           } else {
-            const responsePayload = jwt_decode(response.credential);
+            const responsePayload = jwtDecode(response.credential);
             localStorage.setItem(
               "1stop_rtk",
               JSON.stringify({
